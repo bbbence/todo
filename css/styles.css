@@ -1,0 +1,89 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f99f11;
+}
+
+.container {
+    padding: 1rem;
+    width: 90vw;
+    min-height: 90vh;
+    margin: auto;
+    background-color: rgba(255, 251, 0, 0.3);
+    border: 1px solid rgba(89, 89, 93, .3) ;
+    border-radius: .6rem;
+    box-shadow: 0 0 5rem rgba(59, 59, 63, .3);
+}
+
+@media screen and (min-width: 700px) {
+    .container {
+        width: 40vw;
+        min-height: auto;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .container {
+        width: 30vw;
+        min-height: auto;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .main-container {
+        width: 20vw;
+        min-height: auto;
+    }
+}
+
+.body__day {
+    padding: .5rem;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    border-radius: .6rem;
+    background-color: rgba(21, 121, 160, 0.9);
+    font-size: 1.2rem;
+    margin-bottom: .5rem;
+}
+
+.body__date {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #000000;
+    
+}
+
+.todo__input {
+    border: 1px solid rgba(71, 86, 92, 1);
+    padding: .3rem 1rem;
+    width: 80%;
+    border-radius: .5rem;
+}
+
+.todo__btn {
+    border: 1px solid #ebebeb;
+    background-color: #e45604;
+    padding: .3rem 0;
+    width: 15%;
+    border-radius: .6rem;
+    text-align: center;
+    float: right;
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1.1rem;
+    font-weight: 900;
+    color: rgba(244, 247, 252, 1);
