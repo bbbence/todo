@@ -1,5 +1,7 @@
 'use strict';
 
+import localDB from './localDB.js';
+
 (function() {
     // Mock data.
      let todos = [];
@@ -10,6 +12,7 @@
      const todoAddBtn = document.querySelector('.todo__btn');
      const todoInput = document.querySelector('.todo__input');
      const todoListPending = document.querySelector('.todo__list--pending');
+     const pendingItems = document.querySelector('.todo__number');
 
      const dayNames = [
          'Sunday', 
@@ -20,28 +23,7 @@
          'Saturday',
      ];
 
-    // Localstorage handler object.
-    const localDB = {
-        // localDB.setItem('todos', todos);
-        setItem(key, value) {
-            value = JSON.stringify(value);
-            localStorage.setItem(key, value);
-        },
-        // localDB.getItem('todos');
-        getItem(key) {
-            const value = localStorage.getItem(key);
-            if (!value) {
-                return null;
-            }
-
-            return JSON.parse(value);
-          },
-          // localDB.removeItem('todos');
-        removeItem(key) {
-            localStorage.removeItem(key);
-          }
-
-    };
+    
     // localDB.setItem('todos', todos);
 
     //localDB.getItem('todos');
@@ -67,6 +49,7 @@
         if (todos && Array.isArray(todos)) {
             todos.forEach( todo => showTodo(todo) );
         }
+        showPending();
 
         
     };
@@ -98,6 +81,8 @@
         }
 
         const todo = {
+            id: `todo-${Math.floor(Math.random() * 100000)}`,
+            // id: `todo-${new Date().getTime()}`,   -létrehozás ideje, mint azonosító
             text: value,
             done: false
         };
@@ -107,6 +92,7 @@
         localDB.setItem('todos', todos);
 
         showTodo(todo);
+        showPending();
 
         todoInput.value = '';
 
@@ -120,10 +106,33 @@
         todoItem.innerHTML = `
         <input type="checkbox">
         <span>${todo.text}</span>
-        <button>
-        <i class="fa fa-trash"></i>
+        <button data-todoid="${todo.id}">
+            <i class="fa fa-trash"></i>
         </button>
         `;
+
+        const delBtn = todoItem.querySelector('button');
+        delBtn.addEventListener('click', delTodo);
+
+    };
+
+    // Delete todo item.
+    const delTodo = ev => {
+        const button = ev.currentTarget;
+        const btnParent = button.parentElement;
+        const todoID = button.getAttribute('data-todoid');
+        const todoIndex = todos.findIndex( todo => todo.id === todoID );
+
+        btnParent.parentElement.removeChild(btnParent);
+        todos.splice(todoIndex, 1);
+        localDB.setItem('todos', todos);
+        
+    };
+
+    // Count pending todos.
+    const showPending = () => {
+        const pendingsNum =todos.filter( todo => !todo.done ).length;
+        pendingItems.textContent = pendingsNum;
     };
 
     init();
